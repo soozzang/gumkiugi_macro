@@ -3,16 +3,16 @@ import pyperclip
 import time
 import re
 
-# 1. 채팅(강화 결과) 좌표
+# 1. 채팅(강화 결과) 좌표 (강화 성공 기준으로 잡히는 좌표여야함)
 OUTPUT_X = 1010
-OUTPUT_Y = 670
+OUTPUT_Y = 660
 
 # 2. 채팅입력창 좌표
 INPUT_X = 1200
 INPUT_Y = 1050
 
 # 3. 목표 레벨
-TARGET_LEVEL = 18
+TARGET_LEVEL = 5
 
 def get_last_message():
     pyautogui.click(x=OUTPUT_X, y=OUTPUT_Y)
@@ -82,7 +82,7 @@ def main():
         else:
             current_level = level
 
-        if current_level >= TARGET_LEVEL:
+        if current_level is not None and current_level >= TARGET_LEVEL:
             break
 
 if __name__ == "__main__":
