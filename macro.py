@@ -12,7 +12,7 @@ INPUT_X = 1200
 INPUT_Y = 1050
 
 # 3. 목표 레벨
-TARGET_LEVEL = 5
+TARGET_LEVEL = 18
 
 def get_last_message():
     pyautogui.click(x=OUTPUT_X, y=OUTPUT_Y)
@@ -22,14 +22,11 @@ def get_last_message():
     pyautogui.hotkey('command', 'c')
     time.sleep(0.05)
 
-    try:
-        full_text = pyperclip.paste()
-        if not full_text:
-            return ""
-        lines = full_text.split('\n')
-        recent_log = "\n".join(lines[-15:])
-        return recent_log
-    except:
+    full_text = pyperclip.paste()
+    if full_text:
+        first_line = full_text.split('\n')[0]
+        return first_line.strip()
+    else:
         return ""
 
 
