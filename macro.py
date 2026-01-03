@@ -32,20 +32,17 @@ def get_last_message():
 
 def parse_game_state(message):
     if "강화 파괴" in message:
-        return "fail", 0
+        return 0
+
+    if "강화 유지" in message:
+        return None
 
     success_match = re.search(r'\+(\d+)\s*→\s*\+(\d+)', message)
     if success_match:
         new_level = int(success_match.group(2))
-        return "success", new_level
+        return new_level
 
-    if "강화 유지" in message:
-        maintain_match = re.search(r'\[\+(\d+)\]', message)
-        if maintain_match:
-            current_level = int(maintain_match.group(1))
-            return "maintain", current_level
-
-    return "unknown", None
+    return None
 
 
 def perform_enhance():
@@ -72,14 +69,9 @@ def main():
         time.sleep(5)
 
         log = get_last_message()
-        status, level = parse_game_state(log)
+        level = parse_game_state(log)
 
-        if status == 'fail':
-            current_level = 0
-        else:
-            current_level = level
-
-        if current_level is not None and current_level >= TARGET_LEVEL:
+        if level is not None and level >= TARGET_LEVEL:
             break
 
 if __name__ == "__main__":
